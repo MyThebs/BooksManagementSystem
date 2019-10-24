@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>login</title>
+	<link rel="stylesheet" type="text/css" href="css/login.css">
+</head>
+<body>
+	<div class="main">
+		<div class="logo">
+			<img src="images/loginlogo.png" alt="">
+			<div class="title">
+				<span>图书管理系统</span>
+				<span>Book Management System</span>
+				<p>轻松办公从现在开始</p>
+			</div>
+			<div class="login">
+				<form action="Login" method="post" class="loginForm">
+					<p>
+						<span>账&nbsp;&nbsp;&nbsp;号</span>
+						<input type="text" name="uname" id="username">
+						<select class="cstyle">
+							<option value="default">默认风格</option>
+							<option value="red">红色风格</option>
+							<option value="green">绿色风格</option>
+						</select>
+					</p>
+					<p>
+						<span>密&nbsp;&nbsp;&nbsp;码</span>
+						<input type="password" name="upwd" id="password">
+					</p>
+					<p>
+						<span>验证码</span>
+						<input type="text" name="validate" id="validate">
+						<input type="submit" value="登陆" id="submit">
+						<div class="code">
+							
+						</div>
+					</p>
+				</form>
+			</div>
+			<div class="errmsg">
+				
+			</div>
+		</div>
+
+	</div>
+<script type="text/javascript">
+		function getCode(){
+			var codes=[0,1,2,3,4,5,6,7,8,9,'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'];
+			var mycode="";
+			for (var i = 0; i < 4; i++) {
+				var index=Math.floor(Math.random()*36);
+				var code=codes[index];
+				mycode+=code;
+			}
+			return mycode;
+		}
+		//窗体加载时显示验证码
+		var code=document.querySelector(".code");
+		code.innerHTML=getCode();	
+
+		//点击验证码事件
+		code.addEventListener("click",function(){
+			code.innerHTML=getCode();			
+		});
+
+		//选择背景色
+		var cstyle=document.querySelector(".cstyle");
+		cstyle.addEventListener("change",function(){
+			if(cstyle.value=="red")
+				document.body.style.backgroundColor="red";
+			else if(cstyle.value=="green")
+				document.body.style.backgroundColor="green";
+			else
+				document.body.style.backgroundColor="#0170a4";	
+		});
+
+		//表单提交数据验证
+		var loginForm=document.querySelector(".loginForm");
+		loginForm.addEventListener("submit",function(e){
+			var username=document.querySelector("#username");
+			var password=document.querySelector("#password");
+			var validate=document.querySelector("#validate");
+			var errmsg=document.querySelector(".errmsg");
+			if(username.value==""){
+				errmsg.innerText="请输入用户名!";
+				return e.preventDefault(); //阻止表单提交
+			}else if(password.value==""){
+				errmsg.innerText="请输入密码!";
+				return e.preventDefault();
+			}else if(validate.value!=code.innerText){
+				errmsg.innerText="请输入正确的验证码!";
+				return e.preventDefault();
+			}else{
+				return true;
+			}
+		});
+
+	/*$(document).ready(function(){
+		$(".code").html(getCode());
+	});
+	$(".code").click(function(){
+		$(".code").html(getCode());
+	})
+
+	$(".cstyle").change(function(){
+		if($(".cstyle").val()=="red")
+			$("body").css({"background-color":"red"});
+		else if($(".cstyle").val()=="green")
+			$("body").css({"background-color":"green"});
+		else
+			$("body").css({"background-color":"#0170a4"});
+
+	});
+
+	$(".loginForm").submit(function(){
+		if($("#username").val()==""){
+			$(".errmsg").html("请输入用户名!");
+			return false;
+		}else if($("#password").val()==""){
+			$(".errmsg").html("请输入密码!");
+			return false;
+		}else if($("#validate").val()!=$(".code").html()){
+			$(".errmsg").html("请输入正确的验证码!");
+			return false;
+		}else{
+			return true;
+		}
+	});*/
+	
+</script>	
+</body>
+</html>
